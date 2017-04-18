@@ -6,13 +6,14 @@
 </description>
     <link>privatezero.github.io/weaverblog/</link>
     <atom:link href="privatezero.github.io/weaverblog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 18 Apr 2017 20:10:01 +0000</pubDate>
-    <lastBuildDate>Tue, 18 Apr 2017 20:10:01 +0000</lastBuildDate>
+    <pubDate>Tue, 18 Apr 2017 20:16:58 +0000</pubDate>
+    <lastBuildDate>Tue, 18 Apr 2017 20:16:58 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
         <title>Adventures In Perceptual Hashing</title>
-        <description>
+        <description>&lt;p&gt;One of the primary goals of my project at CUNY TV is to implement a system of perceptual hashing that can be integrated into out archival workflows.  Perceptual hashing is a method of identifying similar content using automated analysis; the goal being to eliminate the (often impossible) necessity of having a person look at every item one-by-one to make content comparisons.&lt;/p&gt;
+
 </description>
         <pubDate>Tue, 18 Apr 2017 00:00:00 +0000</pubDate>
         <link>privatezero.github.io/weaverblog/2017/04/18/Adventures-in-perceptual-hashing.html</link>
