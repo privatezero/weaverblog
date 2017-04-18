@@ -4,10 +4,10 @@
     <title>Andrew Weaver's Blog</title>
     <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
 </description>
-    <link>privatezero.github.io/</link>
-    <atom:link href="privatezero.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 18 Apr 2017 18:52:02 +0000</pubDate>
-    <lastBuildDate>Tue, 18 Apr 2017 18:52:02 +0000</lastBuildDate>
+    <link>privatezero.github.io/weaverblog/</link>
+    <atom:link href="privatezero.github.io/weaverblog/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Tue, 18 Apr 2017 19:17:41 +0000</pubDate>
+    <lastBuildDate>Tue, 18 Apr 2017 19:17:41 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
@@ -28,8 +28,8 @@
 
 </description>
         <pubDate>Sun, 01 Jan 2017 01:02:37 +0000</pubDate>
-        <link>privatezero.github.io/jekyll/update/2017/01/01/welcome-to-jekyll.html</link>
-        <guid isPermaLink="true">privatezero.github.io/jekyll/update/2017/01/01/welcome-to-jekyll.html</guid>
+        <link>privatezero.github.io/weaverblog/jekyll/update/2017/01/01/welcome-to-jekyll.html</link>
+        <guid isPermaLink="true">privatezero.github.io/weaverblog/jekyll/update/2017/01/01/welcome-to-jekyll.html</guid>
         
         
         <category>jekyll</category>
@@ -43,8 +43,8 @@
         <description>
 </description>
         <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
-        <link>privatezero.github.io/2017/01/01/dns-setup-ubuntu.html</link>
-        <guid isPermaLink="true">privatezero.github.io/2017/01/01/dns-setup-ubuntu.html</guid>
+        <link>privatezero.github.io/weaverblog/2017/01/01/dns-setup-ubuntu.html</link>
+        <guid isPermaLink="true">privatezero.github.io/weaverblog/2017/01/01/dns-setup-ubuntu.html</guid>
         
         
       </item>
