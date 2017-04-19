@@ -12,7 +12,7 @@ One of the key differences between normal checksum comparisons and perceptual ha
 Perceptual hashing methods seek to accomodate for these types of changes by applying various transformations to the content before generating the actual hash, also known as a 'fingerprint'. For example, the audio fingerprinting library _Chromaprint_ converts all inputs to a sample rate of 11025 Hz before generating representations of the content in musical notes via frequency analysis which are used to create the final fingerprint. [^1] The fingerprint standard in MPEG-7 that I have been experimenting with for my project does something analogous, generating global fingerprints per frame with both original and square aspect ratios as well as several sub-fingerprints. [^2] This allows comparisons to be made that are resistant to differences caused by factors such as lossy codecs and cropping.
 
 ### Hands on Example
-As of the version 3.3 release, the powerful Open Source tool FFmpeg has the ability to generate and compare MPEG-7 video fingerprints.  What this means, is that if you have the most recent version of FFmpeg, you are already capable of conducting perceptual hash comparisons!  If you don't have FFmpeg and are interested in installing it, there are excellent instructions for Apple, Linux and Windows users available at [Reto Kromer's Webpage](https://avpres.net/FFmpeg/#ch1)
+As of the version 3.3 release, the powerful Open Source tool FFmpeg has the ability to generate and compare MPEG-7 video fingerprints.  What this means, is that if you have the most recent version of FFmpeg, you are already capable of conducting perceptual hash comparisons! If you don't have FFmpeg and are interested in installing it, there are excellent instructions for Apple, Linux and Windows users available at [Reto Kromer's Webpage](https://avpres.net/FFmpeg/#ch1)
 
 For this example I used the following video from the University of Washington Libraries' [Internet Archive  page](https://archive.org/details/uwlibraries) as a source.
 
@@ -40,9 +40,16 @@ What these results show is that even though the GIF was of lower quality and dif
 
 For some further breakdown of how this command works (and lots of other FFmpeg commands), see the example at [__ffmprovisr__](https://amiaopensource.github.io/ffmprovisr/#compare_video_fingerprints).
 
-### Application at CUNY
+### Implementing Perceptual Hashing at CUNY TV
+At CUNY we are interested in perceptual hashing to help identify redundant material, as well as establish connections between shows utilizing identical source content. For example, by implementing systemwide perceptual hashing, it would be possible to take footage from a particular shoot and programmatically search for every production that it had been used in. This would obviously be MUCH faster than viewing videos one by one looking for similar scenes.
 
-At CUNY, we are interested in using perceptual hashing
+As our goal is collection wide searches, three elements had to be added to existing preservation structures: A method for generating fingerprints on file ingest, a database for storing them and a way to compare files against that database. Fortunately, one of these was already essentially in place. As other part of my residency called for building a database to store other forms of preservation metadata, I had an existing database that I could modify with an additional table for perceptual hashes. The MPEG-7 system of hash comparisons uses a three tiered approach to establish accurate links, starting with a 'rough fingerprint' and then moving on to more granular levels.  For simplicity and speed (and due to us not needing accuracy down to fractions of seconds) I decided to only store the components of the 'rough fingerprint' in the database.
+
+As digital preservation at CUNY TV revolves around a set of microservices, I was able to write a script for fingerprint generation and database insertion that can be run on individual files as well as inserted as necessary into preservation actions (such as AIP generation). This script is available [here](https://github.com/mediamicroservices/mm/blob/master/makefingerprint) at the mediamicroservices repository on github. Likewise, my script for generating a hash from an input and comparing it against values stored in the database can be found [here](https://github.com/mediamicroservices/mm/blob/master/searchfingerprint).
+
+
+
+
 
 [^1]: Lalinský, L. (2011, January 18). How Does Chromaprint Work? [https://oxygene.sk/2011/01/how-does-chromaprint-work/](https://oxygene.sk/2011/01/how-does-chromaprint-work/)
 [^2]: [Chiariglione, L. (2014). Mpeg representation of digital media. Springer, 84-85.](http://www.worldcat.org/oclc/902763394)
