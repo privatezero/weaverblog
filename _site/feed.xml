@@ -6,16 +6,61 @@
 </description>
     <link>privatezero.github.io/weaverblog/</link>
     <atom:link href="privatezero.github.io/weaverblog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 18 Apr 2017 21:00:56 +0000</pubDate>
-    <lastBuildDate>Tue, 18 Apr 2017 21:00:56 +0000</lastBuildDate>
+    <pubDate>Wed, 19 Apr 2017 19:25:35 +0000</pubDate>
+    <lastBuildDate>Wed, 19 Apr 2017 19:25:35 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
         <title>Adventures In Perceptual Hashing</title>
-        <description>&lt;p&gt;One of the primary goals of my project at CUNY TV is to prototype a system of perceptual hashing that can be integrated into our archival workflows. Perceptual hashing is a method of identifying similar content using automated analysis; the goal being to eliminate the (often impossible) necessity of having a person look at every item one-by-one to make comparisons. Perceptual hashes function in a similar sense to standard checksums, except instead of comparing hashes to establish similarity of bits, they establish similarity of content as would be perceived by a viewer or listener.&lt;/p&gt;
+        <description>&lt;h3 id=&quot;background&quot;&gt;Background&lt;/h3&gt;
+&lt;p&gt;One of the primary goals of my project at CUNY TV is to prototype a system of perceptual hashing that can be integrated into our archival workflows. Perceptual hashing is a method of identifying similar content using automated analysis; the goal being to eliminate the (often impossible) necessity of having a person look at every item one-by-one to make comparisons. Perceptual hashes function in a similar sense to standard checksums, except instead of comparing hashes to establish exact matches between files at the bit level, they establish similarity of content as would be perceived by a viewer or listener.&lt;/p&gt;
 
-&lt;p&gt;There are many examples of perceptual hashing in use that you might already have encountered.  If you have ever used Shazzam to identify a song, then you have used perceptual hashing. When you encounter a video on Youtube that has had its audio track muted due to copyright violation, it was probably detected via perceptual hashing.&lt;/p&gt;
+&lt;p&gt;There are many examples of perceptual hashing in use that you might already have encountered. If you have ever used Shazam to identify a song, then you have used perceptual hashing! Likewise, if you have done a reverse Google image search, that was also facilitated through perceptual hashing. When you encounter a video on Youtube that has had its audio track muted due to copyright violation, it was probably detected via perceptual hashing.&lt;/p&gt;
 
+&lt;p&gt;One of the key differences between normal checksum comparisons and perceptual hashing is that perceptual hashes attempt to enable linking of original items and derivative or modified versions. For example, if you have a high quality FLAC file of a song and make a copy transcoded to MP3, you will not be able to generate matching checksums from the two files. Likewise, if you added a watermark to a digital video it would be impossible to compare the files using checksums. In both of these examples, even though the actual content is almost identical in a perceptive sense, as data it is completely different.&lt;/p&gt;
+
+&lt;p&gt;Perceptual hashing methods seek to accomodate for these types of changes by applying various transformations to the content before generating the actual hash, also known as a ‘fingerprint’. For example, the audio fingerprinting library &lt;em&gt;Chromaprint&lt;/em&gt; converts all inputs to a sample rate of 11025 Hz before generating representations of the content in musical notes via frequency analysis which are used to create the final fingerprint. &lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; The fingerprint standard in MPEG-7 that I have been experimenting with for my project does something analogous, generating global fingerprints per frame with both original and square aspect ratios as well as several sub-fingerprints. &lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; This allows comparisons to be made that are resistant to differences caused by factors such as lossy codecs and cropping.&lt;/p&gt;
+
+&lt;h3 id=&quot;hands-on-example&quot;&gt;Hands on Example&lt;/h3&gt;
+&lt;p&gt;As of the version 3.3 release, the powerful Open Source tool FFmpeg has the ability to generate and compare MPEG-7 video fingerprints.  What this means, is that if you have the most recent version of FFmpeg, you are already capable of conducting perceptual hash comparisons!  If you don’t have FFmpeg and are interested in installing it, there are excellent instructions for Apple, Linux and Windows users available at &lt;a href=&quot;https://avpres.net/FFmpeg/#ch1&quot;&gt;Reto Kromer’s Webpage&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;For this example I used the following video from the University of Washington Libraries’ &lt;a href=&quot;https://archive.org/details/uwlibraries&quot;&gt;Internet Archive  page&lt;/a&gt; as a source.&lt;/p&gt;
+
+&lt;iframe src=&quot;https://archive.org/embed/NarrowsclipH.264ForVideoPodcasting&quot; width=&quot;320&quot; height=&quot;240&quot; frameborder=&quot;0&quot; webkitallowfullscreen=&quot;true&quot; mozallowfullscreen=&quot;true&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;From this source, I created a GIF out of a small excerpt and uploaded it to Github.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/privatezero/Blog-Materials/master/Tacoma.gif&quot; alt=&quot;GIF&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Since FFmpeg supports URLs as inputs, it is possible to test out the filter without downloading the sample files! Just copy the following command into your terminal and try running it! (Sometimes this might time out. In that case just wait a bit and try again.)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Sample Fingerprint Command&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;ffmpeg -i https://ia601302.us.archive.org/25/items/NarrowsclipH.264ForVideoPodcasting/Narrowsclip-h.264.ogv  -i https://raw.githubusercontent.com/privatezero/Blog-Materials/master/Tacoma.gif -filter_complex &lt;span class=&quot;nv&quot;&gt;signature&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;detectmode&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;full:nb_inputs&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2 -f null -&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;strong&gt;Generated Output&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;Parsed_signature_0 @ 0x7feef8c34bc0] matching of video 0 at 80.747414 and 1 at 0.000000, 48 frames matching
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;Parsed_signature_0 @ 0x7feef8c34bc0] whole video matching&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;What these results show is that even though the GIF was of lower quality and different dimensions, the FFmpeg signature filter was able to detect that it matched content in the original video starting around 80 seconds in!&lt;/p&gt;
+
+&lt;p&gt;For some further breakdown of how this command works (and lots of other FFmpeg commands), see the example at &lt;a href=&quot;https://amiaopensource.github.io/ffmprovisr/#compare_video_fingerprints&quot;&gt;&lt;strong&gt;ffmprovisr&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;application-at-cuny&quot;&gt;Application at CUNY&lt;/h3&gt;
+
+&lt;p&gt;At CUNY, we are interested in using perceptual hashing&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;Lalinský, L. (2011, January 18). How Does Chromaprint Work? &lt;a href=&quot;https://oxygene.sk/2011/01/how-does-chromaprint-work/&quot;&gt;https://oxygene.sk/2011/01/how-does-chromaprint-work/&lt;/a&gt; &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;&lt;a href=&quot;http://www.worldcat.org/oclc/902763394&quot;&gt;Chiariglione, L. (2014). Mpeg representation of digital media. Springer, 84-85.&lt;/a&gt; &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
 </description>
         <pubDate>Tue, 18 Apr 2017 00:00:00 +0000</pubDate>
         <link>privatezero.github.io/weaverblog/2017/04/18/Adventures-in-perceptual-hashing.html</link>
