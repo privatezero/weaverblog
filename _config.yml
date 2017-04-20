@@ -28,8 +28,8 @@ markdown: kramdown
 # Theme setting
 author: Andrew Weaver
 nick:   Weaver
-profession: "Archivist and Librarian"
-tagline: "Audio//Visual//Digital//Preservation"
+profession: "Archivist/Librarian"
+tagline: "A blog about stuff. And things."
 timezone: Pacific
 baseurl: ""
 feed: true

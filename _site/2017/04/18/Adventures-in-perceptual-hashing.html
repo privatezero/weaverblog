@@ -27,9 +27,9 @@
           <!-- site title -->
           <h1 class="site-name">Andrew Weaver</h1>
           <!-- tag 1 -->
-          <p class="site-tagline">I am an <span class="profession">Archivist and Librarian</span></p>
+          <p class="site-tagline">I am an <span class="profession">Audiovisual and Digital Archivist/Librarian</span></p>
            <!-- tag 2 -->
-           <p class="site-tagline">Audio//Visual//Digital//Preservation</p>
+           <p class="site-tagline">A blog about stuff. And things.</p>
       </div>
     </div>
   </div>
@@ -67,7 +67,7 @@
 <p>Perceptual hashing methods seek to accomodate for these types of changes by applying various transformations to the content before generating the actual hash, also known as a ‘fingerprint’. For example, the audio fingerprinting library <em>Chromaprint</em> converts all inputs to a sample rate of 11025 Hz before generating representations of the content in musical notes via frequency analysis which are used to create the final fingerprint. <sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> The fingerprint standard in MPEG-7 that I have been experimenting with for my project does something analogous, generating global fingerprints per frame with both original and square aspect ratios as well as several sub-fingerprints. <sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup> This allows comparisons to be made that are resistant to differences caused by factors such as lossy codecs and cropping.</p>
 
 <h3 id="hands-on-example">Hands on Example</h3>
-<p>As of the version 3.3 release, the powerful Open Source tool FFmpeg has the ability to generate and compare MPEG-7 video fingerprints.  What this means, is that if you have the most recent version of FFmpeg, you are already capable of conducting perceptual hash comparisons! If you don’t have FFmpeg and are interested in installing it, there are excellent instructions for Apple, Linux and Windows users available at <a href="https://avpres.net/FFmpeg/#ch1">Reto Kromer’s Webpage</a></p>
+<p>As of the version 3.3 release, the powerful Open Source tool FFmpeg has the ability to generate and compare MPEG-7 video fingerprints.  What this means, is that if you have the most recent version of FFmpeg, you are already capable of conducting perceptual hash comparisons! If you don’t have FFmpeg and are interested in installing it, there are excellent instructions for Apple, Linux and Windows users available at <a href="https://avpres.net/FFmpeg/#ch1">Reto Kromer’s Webpage</a>.</p>
 
 <p>For this example I used the following video from the University of Washington Libraries’ <a href="https://archive.org/details/uwlibraries">Internet Archive  page</a> as a source.</p>
 
@@ -77,7 +77,7 @@
 
 <p><img src="https://raw.githubusercontent.com/privatezero/Blog-Materials/master/Tacoma.gif" alt="GIF" /></p>
 
-<p>Since FFmpeg supports URLs as inputs, it is possible to test out the filter without downloading the sample files! Just copy the following command into your terminal and try running it! (Sometimes this might time out. In that case just wait a bit and try again.)</p>
+<p>Since FFmpeg supports URLs as inputs, it is possible to test out the filter without downloading the sample files! Just copy the following command into your terminal and try running it! (Sometimes this might time out; in that case just wait a bit and try again).</p>
 
 <p><strong>Sample Fingerprint Command</strong></p>
 
@@ -95,15 +95,15 @@
 <h3 id="implementing-perceptual-hashing-at-cuny-tv">Implementing Perceptual Hashing at CUNY TV</h3>
 <p>At CUNY we are interested in perceptual hashing to help identify redundant material, as well as establish connections between shows utilizing identical source content. For example, by implementing systemwide perceptual hashing, it would be possible to take footage from a particular shoot and programmatically search for every production that it had been used in. This would obviously be MUCH faster than viewing videos one by one looking for similar scenes.</p>
 
-<p>As our goal is collection wide searches, three elements had to be added to existing preservation structures: A method for generating fingerprints on file ingest, a database for storing them and a way to compare files against that database. Fortunately, one of these was already essentially in place. As other parts of my residency called for building a database to store other forms of preservation metadata, I had an existing database that I could modify with an additional table for perceptual hashes. The MPEG-7 system of hash comparisons uses a three tiered approach to establish accurate links, starting with a ‘rough fingerprint’ and then moving on to more granular levels.  For simplicity and speed (and due to us not needing accuracy down to fractions of seconds) I decided to only store the components of the ‘rough fingerprint’ in the database.</p>
+<p>As our goal is collection wide searches, three elements had to be added to existing preservation structures: A method for generating fingerprints on file ingest, a database for storing them and a way to compare files against that database. Fortunately, one of these was already essentially in place. As other parts of my residency called for building a database to store other forms of preservation metadata, I had an existing database that I could modify with an additional table for perceptual hashes. The MPEG-7 system of hash comparisons uses a three tiered approach to establish accurate links, starting with a ‘rough fingerprint’ and then moving on to more granular levels.  For simplicity and speed (and due to us not needing accuracy down to fractions of seconds) I decided to only store the components of the ‘rough fingerprint’ in the database. Each ‘rough fingerprint’ represents the information contained in forty-five frame segments. Full fingerprints are stored as sidecar files in our archival packages.</p>
 
 <p>As digital preservation at CUNY TV revolves around a set of microservices, I was able to write a script for fingerprint generation and database insertion that can be run on individual files as well as inserted as necessary into preservation actions (such as AIP generation). This script is available <a href="https://github.com/mediamicroservices/mm/blob/master/makefingerprint">here</a> at the mediamicroservices repository on github. Likewise, my script for generating a hash from an input and comparing it against values stored in the database can be found <a href="https://github.com/mediamicroservices/mm/blob/master/searchfingerprint">here</a>.</p>
 
-<p>I am now engaged with creating and ingesting fingerprints into the database for as many files as possible. As of writing, there are around 1700 videos represented in the database by individual fingerprints for over 1.7 million frames. The image below is an example of current search output.</p>
+<p>I am now engaged with creating and ingesting fingerprints into the database for as many files as possible. As of writing, there are around 1700 videos represented in the database by over 1.7 million individual fingerprints. The image below is an example of current search output.</p>
 
 <p><img src="https://raw.githubusercontent.com/privatezero/Blog-Materials/master/breweryguy.jpg" alt="Breweryguy" /></p>
 
-<p>During search, fingerprints are generated and then compared against the database, with matches being reported in 500 frame chunks. Output is displayed both in the terminal as well as superimposed on a preview window.  In this example, a 100 second segment of the input returned matches from three files with search time (including fingerprint generation) taking about about 25 seconds.</p>
+<p>During search, fingerprints are generated and then compared against the database, with matches being reported in 500 frame chunks. Output is displayed both in the terminal as well as superimposed on a preview window.  In this example, a 100 second segment of the input returned matches from three files, with search time (including fingerprint generation) taking about about 25 seconds.</p>
 
 <p>The most accurate results so far have been derived from footage of a more distinct nature (such as the example above). False positives occur more frequently with less visually unique sources, such as interviews being conducted in front of a uniform black background. While there are still a few quirks in the system, testing so far has been successful at identifying footage reused across multiple broadcasts with a manageably low amount of false results. Overall, I am very optimistic for the potential enhancements that perceptual hashing can add to CUNY TV archival workflows!</p>
 
