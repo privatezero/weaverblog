@@ -4,11 +4,83 @@
     <title>Andrew Weaver's Blog</title>
     <description>Welcome to my blog! Sometimes I write about stuff here. And things.
 </description>
-    <link>privatezero.github.io/weaverblog/</link>
-    <atom:link href="privatezero.github.io/weaverblog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 20 Apr 2017 20:57:44 +0000</pubDate>
-    <lastBuildDate>Thu, 20 Apr 2017 20:57:44 +0000</lastBuildDate>
+    <link>privatezero.github.io/weaverblog/weaverblog/</link>
+    <atom:link href="privatezero.github.io/weaverblog/weaverblog/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 20 Sep 2017 23:32:21 +0000</pubDate>
+    <lastBuildDate>Wed, 20 Sep 2017 23:32:21 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>Demystifying Ffmpeg</title>
+        <description>&lt;h3 id=&quot;demystifying-ffmpeg&quot;&gt;Demystifying FFmpeg&lt;/h3&gt;
+
+&lt;p&gt;This is a quick and dirty adaption of my ‘Demystifying FFmpeg’ talk! Includes an embedded version as well as useful links and cut/paste versions of some of the commands used in the slides.&lt;/p&gt;
+
+&lt;p&gt;Links:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.google.com/presentation/d/1_DET6E4Al9vSul6nBwraX64K1mw2SYJ7ZN0TiqbZaqU/edit?usp=sharing&quot;&gt;Presentation Slides in Google&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;ffmprovisr: https://amiaopensource.github.io/ffmprovisr/&quot;&gt;ffmprovisr&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://trac.ffmpeg.org/wiki/FancyFilteringExamples&quot;&gt;FFmpeg Filtering Examples&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://ffmpeg.org/ffmpeg.html&quot;&gt;FFmpeg Documentation&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://avpres.net/FFmpeg/#ch1&quot;&gt;Installation Help by Reto Kromer&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;slides&quot;&gt;Slides&lt;/h3&gt;
+&lt;iframe src=&quot;https://docs.google.com/presentation/d/e/2PACX-1vSyy0wYXXAaj6_a_6iOnWDfrPrI6zNLFfWR4Lh5aT74Mn74P_kW0FmyGVyD_w0W2hNxLWfNayUuJNtL/embed?start=false&amp;amp;loop=false&amp;amp;delayms=5000&quot; frameborder=&quot;0&quot; width=&quot;480&quot; height=&quot;299&quot; allowfullscreen=&quot;true&quot; mozallowfullscreen=&quot;true&quot; webkitallowfullscreen=&quot;true&quot;&gt;&lt;/iframe&gt;
+
+&lt;h3 id=&quot;commands-used-in-slides&quot;&gt;Commands used in Slides&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;These render a little oddly (extra blank space) in this webpage, but work fine when cut pasted (at least on my machine!) Most commands are written using macOS file paths unless otherwise specified. For windows users, substitute &lt;code class=&quot;highlighter-rouge&quot;&gt;~power.gif&lt;/code&gt; for your output file.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;slide-5&quot;&gt;Slide 5&lt;/h4&gt;
+
+&lt;p&gt;FFmpeg macOS Homebrew Install:&lt;/p&gt;
+
+&lt;p&gt;Install Homebrew by opening Terminal and following homebrew install instructions from &lt;a href=&quot;https://brew.sh&quot;&gt;https://brew.sh&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;Then run:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;brew install ffmpeg --with-sdl2&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Alternately Download from here (OSX and Windows) &lt;a href=&quot;https://ffmpeg.org/download.html&quot;&gt;https://ffmpeg.org/download.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;slide-10&quot;&gt;Slide 10&lt;/h4&gt;
+&lt;p&gt;Caveat for following slides:&lt;/p&gt;
+
+&lt;p&gt;FFmpeg must be installed with freetype and openssl for the following slides. If already installed, run:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;brew reinstall ffmpeg --with-freetype --with-openssl&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;slides1117&quot;&gt;Slides11/17&lt;/h4&gt;
+&lt;p&gt;OSX Command:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ffmpeg -f lavfi -i testsrc=500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex &quot;[0:v][1:v]overlay=-30:55,drawtext=fontfile=/Library/Fonts/Andale Mono.ttf:text='I have the power':fontcolor=white:fontsize=40:box=1:boxcolor=black&quot; -r 10 -t 5 ~/desktop/power.gif&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Windows Command:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ffmpeg -f lavfi -i testsrc=500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex &quot;[0:v][1:v]overlay=-30:55,drawtext=fontfile=/Windows/Fonts/lucon.ttf:text='I have the power':fontcolor=white:fontsize=40:box=1:boxcolor=black&quot; -r 10 -t 5 ~power.gif&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;slide-12&quot;&gt;Slide 12&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ffmpeg -i http://github.com/privatezero/NDSR/raw/master/heman.tiff ~/desktop/power.gif&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;slide-13&quot;&gt;Slide 13&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ffmpeg -f lavfi -i testsrc ~/desktop/power.gif&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;slide-14&quot;&gt;Slide 14&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ffmpeg -f lavfi -i testsrc -r 10 -t 5 ~/desktop/power.gif&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;slide-15&quot;&gt;Slide 15&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ffmpeg -f lavfi -i testsrc -vf vflip -r 10 -t 5 ~/desktop/power.gif&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;slide-16&quot;&gt;Slide 16&lt;/h4&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ffmpeg -f lavfi -i testsrc=500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex &quot;[0:v][1:v]overlay=-30:55&quot; -r 10 -t 5 ~/desktop/power.gif&lt;/code&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 20 Sep 2017 00:00:00 +0000</pubDate>
+        <link>privatezero.github.io/weaverblog/weaverblog/2017/09/20/Demystifying-ffmpeg.html</link>
+        <guid isPermaLink="true">privatezero.github.io/weaverblog/weaverblog/2017/09/20/Demystifying-ffmpeg.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>Adventures In Perceptual Hashing</title>
@@ -19,9 +91,9 @@
 
 &lt;p&gt;One of the key differences between normal checksum comparisons and perceptual hashing is that perceptual hashes attempt to enable linking of original items and derivative or modified versions. For example, if you have a high quality FLAC file of a song and make a copy transcoded to MP3, you will not be able to generate matching checksums from the two files. Likewise, if you added a watermark to a digital video it would be impossible to compare the files using checksums. In both of these examples, even though the actual content is almost identical in a perceptive sense, as data it is completely different.&lt;/p&gt;
 
-&lt;p&gt;Perceptual hashing methods seek to accomodate for these types of changes by applying various transformations to the content before generating the actual hash, also known as a ‘fingerprint’. For example, the audio fingerprinting library &lt;em&gt;Chromaprint&lt;/em&gt; converts all inputs to a sample rate of 11025 Hz before generating representations of the content in musical notes via frequency analysis which are used to create the final fingerprint. &lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; The fingerprint standard in MPEG-7 that I have been experimenting with for my project does something analogous, generating global fingerprints per frame with both original and square aspect ratios as well as several sub-fingerprints. &lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; This allows comparisons to be made that are resistant to differences caused by factors such as lossy codecs and cropping.&lt;/p&gt;
+&lt;p&gt;Perceptual hashing methods seek to accomodate these types of changes by applying various transformations to the content before generating the actual hash, also known as a ‘fingerprint’. For example, the audio fingerprinting library &lt;em&gt;Chromaprint&lt;/em&gt; converts all inputs to a sample rate of 11025 Hz before generating representations of the content in musical notes via frequency analysis which are used to create the final fingerprint. &lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; The fingerprint standard in MPEG-7 that I have been experimenting with for my project does something analogous, generating global fingerprints per frame with both original and square aspect ratios as well as several sub-fingerprints. &lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; This allows comparisons to be made that are resistant to differences caused by factors such as lossy codecs and cropping.&lt;/p&gt;
 
-&lt;h3 id=&quot;hands-on-example&quot;&gt;Hands on Example&lt;/h3&gt;
+&lt;h3 id=&quot;hands-on-example&quot;&gt;Hands-on Example&lt;/h3&gt;
 &lt;p&gt;As of the version 3.3 release, the powerful Open Source tool FFmpeg has the ability to generate and compare MPEG-7 video fingerprints.  What this means, is that if you have the most recent version of FFmpeg, you are already capable of conducting perceptual hash comparisons! If you don’t have FFmpeg and are interested in installing it, there are excellent instructions for Apple, Linux and Windows users available at &lt;a href=&quot;https://avpres.net/FFmpeg/#ch1&quot;&gt;Reto Kromer’s Webpage&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;For this example I used the following video from the University of Washington Libraries’ &lt;a href=&quot;https://archive.org/details/uwlibraries&quot;&gt;Internet Archive  page&lt;/a&gt; as a source.&lt;/p&gt;
@@ -50,7 +122,7 @@
 &lt;h3 id=&quot;implementing-perceptual-hashing-at-cuny-tv&quot;&gt;Implementing Perceptual Hashing at CUNY TV&lt;/h3&gt;
 &lt;p&gt;At CUNY we are interested in perceptual hashing to help identify redundant material, as well as establish connections between shows utilizing identical source content. For example, by implementing systemwide perceptual hashing, it would be possible to take footage from a particular shoot and programmatically search for every production that it had been used in. This would obviously be MUCH faster than viewing videos one by one looking for similar scenes.&lt;/p&gt;
 
-&lt;p&gt;As our goal is collection wide searches, three elements had to be added to existing preservation structures: A method for generating fingerprints on file ingest, a database for storing them and a way to compare files against that database. Fortunately, one of these was already essentially in place. As other parts of my residency called for building a database to store other forms of preservation metadata, I had an existing database that I could modify with an additional table for perceptual hashes. The MPEG-7 system of hash comparisons uses a three tiered approach to establish accurate links, starting with a ‘rough fingerprint’ and then moving on to more granular levels.  For simplicity and speed (and due to us not needing accuracy down to fractions of seconds) I decided to only store the components of the ‘rough fingerprint’ in the database. Each ‘rough fingerprint’ represents the information contained in forty-five frame segments. Full fingerprints are stored as sidecar files in our archival packages.&lt;/p&gt;
+&lt;p&gt;As our goal is collection wide searches, three elements had to be added to existing preservation structures: A method for generating fingerprints on file ingest, a database for storing them and a way to compare files against that database. Fortunately, one of these was already essentially in place. As other parts of my residency called for building a database to store other forms of preservation metadata, I had an existing database that I could modify with an additional table for perceptual hashes. The MPEG-7 system of hash comparisons uses a three-tiered approach to establish accurate links, starting with a ‘rough fingerprint’ and then moving on to more granular levels.  For simplicity and speed (and due to us not needing accuracy down to fractions of seconds) I decided to only store the components of the ‘rough fingerprint’ in the database. Each ‘rough fingerprint’ represents the information contained in ninety frame segments. Full fingerprints are stored as sidecar files in our archival packages.&lt;/p&gt;
 
 &lt;p&gt;As digital preservation at CUNY TV revolves around a set of microservices, I was able to write a script for fingerprint generation and database insertion that can be run on individual files as well as inserted as necessary into preservation actions (such as AIP generation). This script is available &lt;a href=&quot;https://github.com/mediamicroservices/mm/blob/master/makefingerprint&quot;&gt;here&lt;/a&gt; at the mediamicroservices repository on github. Likewise, my script for generating a hash from an input and comparing it against values stored in the database can be found &lt;a href=&quot;https://github.com/mediamicroservices/mm/blob/master/searchfingerprint&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
@@ -58,7 +130,7 @@
 
 &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/privatezero/Blog-Materials/master/breweryguy.jpg&quot; alt=&quot;Breweryguy&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;During search, fingerprints are generated and then compared against the database, with matches being reported in 500 frame chunks. Output is displayed both in the terminal as well as superimposed on a preview window.  In this example, a 100 second segment of the input returned matches from three files, with search time (including fingerprint generation) taking about about 25 seconds.&lt;/p&gt;
+&lt;p&gt;During search, fingerprints are generated and then compared against the database, with matches being reported in 500 frame chunks. Output is displayed both in the terminal as well as superimposed on a preview window.  In this example, a 100 second segment of the input returned matches from three files, with search time (including fingerprint generation) taking about 25 seconds.&lt;/p&gt;
 
 &lt;p&gt;The most accurate results so far have been derived from footage of a more distinct nature (such as the example above). False positives occur more frequently with less visually unique sources, such as interviews being conducted in front of a uniform black background. While there are still a few quirks in the system, testing so far has been successful at identifying footage reused across multiple broadcasts with a manageably low amount of false results. Overall, I am very optimistic for the potential enhancements that perceptual hashing can add to CUNY TV archival workflows!&lt;/p&gt;
 
@@ -74,8 +146,8 @@
 &lt;/div&gt;
 </description>
         <pubDate>Tue, 18 Apr 2017 00:00:00 +0000</pubDate>
-        <link>privatezero.github.io/weaverblog/2017/04/18/Adventures-in-perceptual-hashing.html</link>
-        <guid isPermaLink="true">privatezero.github.io/weaverblog/2017/04/18/Adventures-in-perceptual-hashing.html</guid>
+        <link>privatezero.github.io/weaverblog/weaverblog/2017/04/18/Adventures-in-perceptual-hashing.html</link>
+        <guid isPermaLink="true">privatezero.github.io/weaverblog/weaverblog/2017/04/18/Adventures-in-perceptual-hashing.html</guid>
         
         
       </item>
@@ -103,8 +175,8 @@
 &lt;p&gt;I would like to give particular thanks to the contributors who have helped with the project so far, Reto Kromer, Matt Boyd and Dave Rice!&lt;/p&gt;
 </description>
         <pubDate>Mon, 27 Mar 2017 00:00:00 +0000</pubDate>
-        <link>privatezero.github.io/weaverblog/2017/03/27/Project-'audiorecorder'.html</link>
-        <guid isPermaLink="true">privatezero.github.io/weaverblog/2017/03/27/Project-'audiorecorder'.html</guid>
+        <link>privatezero.github.io/weaverblog/weaverblog/2017/03/27/Project-'audiorecorder'.html</link>
+        <guid isPermaLink="true">privatezero.github.io/weaverblog/weaverblog/2017/03/27/Project-'audiorecorder'.html</guid>
         
         
       </item>
@@ -145,8 +217,8 @@
 
 </description>
         <pubDate>Thu, 13 Oct 2016 00:00:00 +0000</pubDate>
-        <link>privatezero.github.io/weaverblog/2016/10/13/Learning-Github.html</link>
-        <guid isPermaLink="true">privatezero.github.io/weaverblog/2016/10/13/Learning-Github.html</guid>
+        <link>privatezero.github.io/weaverblog/weaverblog/2016/10/13/Learning-Github.html</link>
+        <guid isPermaLink="true">privatezero.github.io/weaverblog/weaverblog/2016/10/13/Learning-Github.html</guid>
         
         
       </item>

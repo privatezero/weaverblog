@@ -33,7 +33,7 @@ nick:   Weaver
 profession: "Archivist/Librarian"
 tagline: "A blog about stuff. And things."
 timezone: Pacific
-baseurl: ""
+baseurl: "/weaverblog"
 feed: true
 
 # Social links
