@@ -6,8 +6,8 @@
 </description>
     <link>privatezero.github.io/weaverblog/weaverblog/</link>
     <atom:link href="privatezero.github.io/weaverblog/weaverblog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 20 Sep 2017 23:32:21 +0000</pubDate>
-    <lastBuildDate>Wed, 20 Sep 2017 23:32:21 +0000</lastBuildDate>
+    <pubDate>Thu, 21 Sep 2017 01:28:20 +0000</pubDate>
+    <lastBuildDate>Thu, 21 Sep 2017 01:28:20 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
@@ -20,7 +20,7 @@
 
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://docs.google.com/presentation/d/1_DET6E4Al9vSul6nBwraX64K1mw2SYJ7ZN0TiqbZaqU/edit?usp=sharing&quot;&gt;Presentation Slides in Google&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;ffmprovisr: https://amiaopensource.github.io/ffmprovisr/&quot;&gt;ffmprovisr&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://amiaopensource.github.io/ffmprovisr/&quot;&gt;ffmprovisr&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://trac.ffmpeg.org/wiki/FancyFilteringExamples&quot;&gt;FFmpeg Filtering Examples&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://ffmpeg.org/ffmpeg.html&quot;&gt;FFmpeg Documentation&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://avpres.net/FFmpeg/#ch1&quot;&gt;Installation Help by Reto Kromer&lt;/a&gt;&lt;/li&gt;

@@ -9,7 +9,7 @@ This is a quick and dirty adaption of my 'Demystifying FFmpeg' talk! Includes an
 Links:
 
 * [Presentation Slides in Google](https://docs.google.com/presentation/d/1_DET6E4Al9vSul6nBwraX64K1mw2SYJ7ZN0TiqbZaqU/edit?usp=sharing)
-* [ffmprovisr](ffmprovisr: https://amiaopensource.github.io/ffmprovisr/)
+* [ffmprovisr](https://amiaopensource.github.io/ffmprovisr/)
 * [FFmpeg Filtering Examples](https://trac.ffmpeg.org/wiki/FancyFilteringExamples)
 * [FFmpeg Documentation](https://ffmpeg.org/ffmpeg.html)
 * [Installation Help by Reto Kromer](https://avpres.net/FFmpeg/#ch1)
