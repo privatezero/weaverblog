@@ -28,7 +28,7 @@ markdown: kramdown
 author: Andrew Weaver
 nick:   Weaver
 profession: "Archivist/Librarian"
-tagline: "A blog about stuff. And things."
+tagline: "A blog about stuff. And things. Sometimes both."
 timezone: Pacific
 baseurl: "/weaverblog"
 feed: true
