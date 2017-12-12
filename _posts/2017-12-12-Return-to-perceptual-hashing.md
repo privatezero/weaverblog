@@ -46,7 +46,7 @@ Once you have some perceptual hashes stored in the database, you can query again
 If matching content is discovered, the output will look something like
 ![searchoutput](/weaverblog/resources/templeofthedog.png)
 
-where the first column is the mediaid (yes I am still using Temple of the Dog as my test file), the second column is the in frame of the matching segment, the third is the out frame of the matching segment, and the fourth and fith are the first two elements of the matching hash.
+where the first column is the mediaid (yes I am still using Temple of the Dog as my test file), the second column is the in frame of the matching segment, the third is the out frame of the matching segment, and the fourth and fifth are the first two elements of the matching hash.
 
 ### Good luck!
 This repository was developed as a starting point for some research/experimentation with perceptual hashes. I am planning on modifying it to store more hash information and to be faster (probably ultimately rewriting the scripts in a different language such as Ruby). I hope this is helpful for anyone who wants to give hashing a try - let me know any questions, comments or successes you may have!
