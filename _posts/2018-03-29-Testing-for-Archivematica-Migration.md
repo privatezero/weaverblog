@@ -66,4 +66,6 @@ While performing digital preservation actions on a whole lot of amazing things l
 
 ![Man with bike in woods](/weaverblog/resources/bikedude.png)
 
-While I am still evaluating the different options for moving our digital storage into a package based preservation system, I have been very heartened by the results of this process! While this system is only useful for digital items that have been cataloged, it shows that an Archivematica migration is definitely a viable option for us.
+*Manning Hill and Eagle bike on road to Hoquiam. [Source](http://content.libraries.wsu.edu/cdm/singleitem/collection/cpratsch/id/0/rec/1)*
+
+While I am still evaluating the different options for moving our digital storage into a package based preservation system, I have been very heartened by the results of this process! While this system is only effective so far for digital items that have been cataloged, it shows that an Archivematica migration is definitely a viable possibility for us. I look forward to seeing how much more of the process could potentially be automated!
