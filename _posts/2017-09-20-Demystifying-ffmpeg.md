@@ -20,7 +20,7 @@ Links:
 
 ### Commands used in Slides
 
-**These render a little oddly (extra blank space) in this webpage, but work fine when cut pasted (at least on my machine!) Most commands are written using macOS file paths unless otherwise specified. For windows users, substitute `~power.gif` for your output file.**
+Most commands are written using macOS file paths unless otherwise specified. For windows users, substitute `~power.gif` for your output file.**
 
 #### Slide 5
 
@@ -29,7 +29,9 @@ FFmpeg macOS Homebrew Install:
 Install Homebrew by opening Terminal and following homebrew install instructions from [https://brew.sh](https://brew.sh))
 
 Then run:
-`brew install ffmpeg --with-sdl2`
+{% highlight shell %}
+brew install ffmpeg --with-sdl2
+{% endhighlight %}
 
 Alternately Download from here (OSX and Windows) [https://ffmpeg.org/download.html](https://ffmpeg.org/download.html)
 
@@ -38,28 +40,44 @@ Caveat for following slides:
 
 FFmpeg must be installed with freetype and openssl for the following slides. If already installed, run:
 
-`brew reinstall ffmpeg --with-freetype --with-openssl`
+{% highlight shell %}
+brew reinstall ffmpeg --with-freetype --with-openssl
+{% endhighlight %}
 
 #### Slides11/17
 OSX Command:
 
-`ffmpeg -f lavfi -i testsrc=500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex "[0:v][1:v]overlay=-30:55,drawtext=fontfile=/Library/Fonts/Andale Mono.ttf:text='I have the power':fontcolor=white:fontsize=40:box=1:boxcolor=black" -r 10 -t 5 ~/desktop/power.gif`
+{% highlight shell %}
+ffmpeg -f lavfi -i testsrc=500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex "[0:v][1:v]overlay=-30:55,drawtext=fontfile=/Library/Fonts/Andale Mono.ttf:text='I have the power':fontcolor=white:fontsize=40:box=1:boxcolor=black" -r 10 -t 5 ~/desktop/power.gif
+{% endhighlight %}
 
 Windows Command:
 
-`ffmpeg -f lavfi -i testsrc=500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex "[0:v][1:v]overlay=-30:55,drawtext=fontfile=/Windows/Fonts/lucon.ttf:text='I have the power':fontcolor=white:fontsize=40:box=1:boxcolor=black" -r 10 -t 5 ~power.gif`
+{% highlight shell %}
+ffmpeg -f lavfi -i testsrc=500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex "[0:v][1:v]overlay=-30:55,drawtext=fontfile=/Windows/Fonts/lucon.ttf:text='I have the power':fontcolor=white:fontsize=40:box=1:boxcolor=black" -r 10 -t 5 ~power.gif
+{% endhighlight %}
 
 #### Slide 12
-`ffmpeg -i http://github.com/privatezero/NDSR/raw/master/heman.tiff ~/desktop/power.gif`
+{% highlight shell %}
+ffmpeg -i http://github.com/privatezero/NDSR/raw/master/heman.tiff ~/desktop/power.gif
+{% endhighlight %}
 
 #### Slide 13
-`ffmpeg -f lavfi -i testsrc ~/desktop/power.gif`
+{% highlight shell %}
+ffmpeg -f lavfi -i testsrc ~/desktop/power.gif
+{% endhighlight %}
 
 #### Slide 14
-`ffmpeg -f lavfi -i testsrc -r 10 -t 5 ~/desktop/power.gif`
+{% highlight shell %}
+ffmpeg -f lavfi -i testsrc -r 10 -t 5 ~/desktop/power.gif
+{% endhighlight %}
 
 #### Slide 15
-`ffmpeg -f lavfi -i testsrc -vf vflip -r 10 -t 5 ~/desktop/power.gif`
+{% highlight shell %}
+ffmpeg -f lavfi -i testsrc -vf vflip -r 10 -t 5 ~/desktop/power.gif
+{% endhighlight %}
 
 #### Slide 16
-`ffmpeg -f lavfi -i testsrc=500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex "[0:v][1:v]overlay=-30:55" -r 10 -t 5 ~/desktop/power.gif`
+{% highlight shell %}
+ffmpeg -f lavfi -i testsrc=500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex "[0:v][1:v]overlay=-30:55" -r 10 -t 5 ~/desktop/power.gif
+{% endhighlight %}
