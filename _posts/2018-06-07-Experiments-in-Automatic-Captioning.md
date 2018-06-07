@@ -8,85 +8,10 @@ The tool I have been most actively experimenting with is the [IBM Watson speech 
 
 To generate video subtitles using Watson I have been using two scripts. [One, written in bash](https://github.com/WSU-CDSC/microservices/blob/master/vid2watson.sh) that handles the actual piping of the file to Watson by converting an input to 16 kHz mono, uploading to Watson and then storing the raw Watson output in a `.json` file. It also creates a rough dump of the raw transcript into text. [The second, written in Ruby](https://github.com/WSU-CDSC/microservices/blob/master/watson2vtt.rb) takes the raw Watson output and parses it into four second segments formatted as a `.vtt` subtitle file. This file can then be used directly with its corresponding video to provide a rough subtitle track.
 
-I made the decision to parse the text into four second segments with the idea of minimizing the amount of intervention required by someone proofreading the `.vtt` files. By standardizing the text chunks it eliminates the need for any manipulation of text timing (which also makes it easier to do editing in a basic text editor rather than specialized software). Hopefully having the editor only focus on textual content will save time and money (as well as the sanity of the proofreaders).
+I made the decision to parse the text into four second segments with the idea of minimizing the amount of intervention required by someone proofreading the `.vtt` files. By standardizing the text chunks, it eliminates the need for any manipulation of text timing (which also makes it easier to do editing in a basic text editor rather than specialized software). Hopefully, having the editor only focus on textual content will save time and money (as well as the sanity of the proofreaders).
 
 So far the results, while far from perfect, have been honestly better than I expected them to be! Quality of the transcript is very dependent on the style of speech employed by speakers in the video, and as the speech model employed seems to be tuned towards a very particular kind of American English, it struggles with speakers who speak in a more 'casual' style (such frequently interjecting 'ya know') where it will mis-assign and make up words. Proper nouns and non-English words are also mis-assigned frequently. A word that Watson often struggles with is 'Archivist', which is unfortunate given the context. This being said, I have been surprised that for several of the videos I have tested there have been broad segments (again, dependent on speaker) that created extremely usable subtitles even with no proofreading.
 
->00:00:12.690 --> 00:00:22.560
+To show an example of a completely human created transcript compared with an unedited Watson created transcript I have uploaded two `.vtt` files to Github Gist, with the [Watson Transcript here](https://gist.github.com/privatezero/6db770e5ff8ff68099cc45b4799faf8e) and the [professionally transcribed file here](https://gist.github.com/privatezero/5b56ea572b9fcfe4bd7b474e97f4fd32). The original video is viewable on [our Vimeo page here](https://vimeo.com/236169049). I think this auto-transcript is relatively representative of my testing so far, being of medium accuracy.
 
->Just in it's a national need
-for responsible and thoughtful
-
->00:00:22.560 --> 00:00:25.800
-
->curation of Indian artifacts.
-
->00:00:25.800 --> 00:00:29.700
-
->And this program is just
-over and above setting us up
-
->00:00:29.700 --> 00:00:31.440
-
->for success and those
-kinds of things.
-
->00:00:31.440 --> 00:00:37.330
-
->00:00:37.330 --> 00:00:46.230
-
->You know it brought us into
-this space that was safe
-
->00:00:46.230 --> 00:00:48.270
-
->and it brought us
-into this space
-
->00:00:48.270 --> 00:00:55.480
-
->where we may come from different
-tribal communities, indigenous,
-
----
-
-> 00:00:12.64 --> 00:00:17.21
-> 
-Justin is the national need for responsible 
-
->00:00:16.89 --> 00:00:18.8
-
->and (PAUSE) 
-
->00:00:19.43 --> 00:00:21.2
-thoughtful 
-
->00:00:22.54 --> 00:00:26.81
-curation of Indian artifacts and this program
-
->00:00:26.81 --> 00:00:30.84
-is just over and above setting us up for success in those
-
->00:00:30.84 --> 00:00:31.49
-kinds of things
-
->00:00:37.25 --> 00:00:39.3
-you know it 
-
->00:00:39.36 --> 00:00:43.18
-brought us into the space stop 
-
->00:00:42.93 --> 00:00:44.55
-(PAUSE) 
-
->00:00:44.57 --> 00:00:46.44
-was safe 
-
->00:00:46.17 --> 00:00:49.78
-and it brought us into the space where 
-
->00:00:49.68 --> 00:00:51.33
-(PAUSE) 
-
->00:00:51.64 --> 00:00:56.0
-we may come from different tribal communities indigenous 
+As usual, the scripts are hosted on our [institutional Github repository](https://github.com/WSU-CDSC/microservices), with some [brief usage instructions available](https://github.com/WSU-CDSC/microservices/blob/master/Resources/transcription-scripts.md)!
