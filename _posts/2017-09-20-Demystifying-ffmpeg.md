@@ -8,15 +8,15 @@ This is a quick and dirty adaption of my 'Demystifying FFmpeg' talk! Includes an
 
 Links:
 
-* [Presentation Slides in Google](https://docs.google.com/presentation/d/1_DET6E4Al9vSul6nBwraX64K1mw2SYJ7ZN0TiqbZaqU/edit?usp=sharing)
+* [Presentation Slides in Google](https://docs.google.com/presentation/d/e/2PACX-1vRWIHaDb4Ecy81LU3MaFIHTmwpeDIGQ_GTfjSyq0n88KlLEbPbeJEnpeH3vbDmYFoNiTjWECD85qs3M/pub?start=false&loop=false&delayms=5000)
 * [ffmprovisr](https://amiaopensource.github.io/ffmprovisr/)
 * [FFmpeg Filtering Examples](https://trac.ffmpeg.org/wiki/FancyFilteringExamples)
 * [FFmpeg Documentation](https://ffmpeg.org/ffmpeg.html)
 * [Installation Help by Reto Kromer](https://avpres.net/FFmpeg/#ch1)
 
 ### Slides
-<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSyy0wYXXAaj6_a_6iOnWDfrPrI6zNLFfWR4Lh5aT74Mn74P_kW0FmyGVyD_w0W2hNxLWfNayUuJNtL/embed?start=false&loop=false&delayms=5000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRWIHaDb4Ecy81LU3MaFIHTmwpeDIGQ_GTfjSyq0n88KlLEbPbeJEnpeH3vbDmYFoNiTjWECD85qs3M/embed?start=false&loop=false&delayms=3000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
 ### Commands used in Slides
 
