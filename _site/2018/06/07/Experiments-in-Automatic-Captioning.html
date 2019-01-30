@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Andrew Weaver's Blog</title>
+    <!-- Bootstrap Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Oxygen:300,400" rel="stylesheet">
+    <!-- fontawesome fonts -->
+    <link rel="stylesheet" href="  /weaverblog/css/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
+    <!-- site stylesheet -->
+    <link rel="stylesheet" href="/weaverblog/css/style.css" media="screen" title="no title" charset="utf-8">
+  </head>
+  <body>
+    <header>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 header">
+          <ul class="nav-icon">
+            <li><a href="/weaverblog" class="site-title">Blog Home</a></li>
+            <li><a href="http://andrewweaver.info" class="site-title">Website</a></li>
+            <li><a href="https://privatezero.github.io/tao" class="site-title">Tao</a></li>
+            <li><a href="https://github.com/privatezero" title="Github" data-hint="Github"  title="Github"><i class="fa fa-github"></i></a></li>
+            <li><a href="https://twitter.com/private_zero" title="Twitter" data-hint="Twitter"  title="Twitter"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="https://www.librarything.com/profile/private_zero" title="Library Thing" data-hint="LT"  title="Library Thing"><i class="fa fa-book"></i></a></li>
+          </ul>
+          <!-- site title -->
+          <h1 class="site-name">Andrew Weaver</h1>
+          <!-- tag 1 -->
+          <p class="site-tagline">I am an <span class="profession">Archivist/Librarian</span></p>
+           <!-- tag 2 -->
+           <p class="site-tagline">A blog about stuff. And things. Sometimes both.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="container">
+      <!-- This page specific styling -->
+<style>
+  .center{
+    margin-top: 20px;
+    text-align: justify;
+  }
+
+  .page-title{
+    margin-top: 5px;
+    font-weight: 300;
+    font-size: 200%;
+  }
+
+</style>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <hr>
+    <br>
+    <h1 class="text-center page-title">Experiments In Automatic Captioning</h1>
+    <p class="text-center"><time>June 7, 2018</time></p>
+    <div class="center">
+      <p>Recently I have been investigating tools to help with automating at least part of the transcription process for the audiovisual materials my institution makes available online. As we have hundreds (thousands?) of hours worth of A/V content already digitally available via our various platforms, and are actively producing more, using automation for a portion of the transcription process makes both logical and fiscal sense for us.</p>
+
+<p>The tool I have been most actively experimenting with is the <a href="https://www.ibm.com/watson/services/speech-to-text/">IBM Watson speech to text service</a>. I should note that this post is simply a reflection of my thoughts on this process so far and is not intended as an explicit recommendation or endorsement of Watson over any of the other similar tools. This testing involved signing up for a non-paid level account on IBM Watson.</p>
+
+<p>To generate video subtitles using Watson I have been using two scripts. <a href="https://github.com/WSU-CDSC/microservices/blob/master/vid2watson.sh">One, written in bash</a> that handles the actual piping of the file to Watson by converting an input to 16 kHz mono, uploading to Watson and then storing the raw Watson output in a <code class="highlighter-rouge">.json</code> file. It also creates a rough dump of the raw transcript into text. <a href="https://github.com/WSU-CDSC/microservices/blob/master/watson2vtt.rb">The second, written in Ruby</a> takes the raw Watson output and parses it into four second segments formatted as a <code class="highlighter-rouge">.vtt</code> subtitle file. This file can then be used directly with its corresponding video to provide a rough subtitle track.</p>
+
+<p>I made the decision to parse the text into four second segments with the idea of minimizing the amount of intervention required by someone proofreading the <code class="highlighter-rouge">.vtt</code> files. By standardizing the text chunks, it eliminates the need for any manipulation of text timing (which also makes it easier to do editing in a basic text editor rather than specialized software). Hopefully, having the editor only focus on textual content will save time and money (as well as the sanity of the proofreaders).</p>
+
+<p>So far the results, while far from perfect, have been honestly better than I expected them to be! Quality of the transcript is very dependent on the style of speech employed by speakers in the video, and as the speech model employed seems to be tuned towards a very particular kind of American English, it struggles with speakers who speak in a more ‘casual’ style (such frequently interjecting ‘ya know’) where it will mis-assign and make up words. Proper nouns and non-English words are also mis-assigned frequently. A word that Watson often struggles with is ‘Archivist’, which is unfortunate given the context. This being said, I have been surprised that for several of the videos I have tested there have been broad segments (again, dependent on speaker) that created extremely usable subtitles even with no proofreading.</p>
+
+<p>To show an example of a completely human created transcript compared with an unedited Watson created transcript I have uploaded two <code class="highlighter-rouge">.vtt</code> files to Github Gist, with the <a href="https://gist.github.com/privatezero/6db770e5ff8ff68099cc45b4799faf8e">Watson Transcript here</a> and the <a href="https://gist.github.com/privatezero/5b56ea572b9fcfe4bd7b474e97f4fd32">professionally transcribed file here</a>. The original video is viewable on <a href="https://vimeo.com/236169049">our Vimeo page here</a>. I think this auto-transcript is relatively representative of my testing so far, being of medium accuracy.</p>
+
+<p>As usual, the scripts are hosted on our <a href="https://github.com/WSU-CDSC/microservices">institutional Github repository</a>, with some <a href="https://github.com/WSU-CDSC/microservices/blob/master/Resources/transcription-scripts.md">brief usage instructions available</a>!</p>
+
+    </div>
+  </div>
+</div>
+<!-- Back button -->
+<p class="text-center"><a class="home" href="/weaverblog/" title="Back to Homepage">Home</a></p>
+
+    </div>
+    <!-- footer section -->
+    <!-- footer section -->
+<footer>
+  <p class="text-center">
+    "No matter where you go, there you are"<br>
+  </p>
+</footer>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </body>
+</html>

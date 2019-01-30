@@ -1,0 +1,62 @@
+<h3 id="demystifying-ffmpeg">Demystifying FFmpeg</h3>
+
+<p>This is a quick and dirty adaption of my ‘Demystifying FFmpeg’ talk! Includes an embedded version as well as useful links and cut/paste versions of some of the commands used in the slides.</p>
+
+<p>Links:</p>
+
+<ul>
+  <li><a href="https://docs.google.com/presentation/d/1_DET6E4Al9vSul6nBwraX64K1mw2SYJ7ZN0TiqbZaqU/edit?usp=sharing">Presentation Slides in Google</a></li>
+  <li><a href="https://amiaopensource.github.io/ffmprovisr/">ffmprovisr</a></li>
+  <li><a href="https://trac.ffmpeg.org/wiki/FancyFilteringExamples">FFmpeg Filtering Examples</a></li>
+  <li><a href="https://ffmpeg.org/ffmpeg.html">FFmpeg Documentation</a></li>
+  <li><a href="https://avpres.net/FFmpeg/#ch1">Installation Help by Reto Kromer</a></li>
+</ul>
+
+<h3 id="slides">Slides</h3>
+<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSyy0wYXXAaj6_a_6iOnWDfrPrI6zNLFfWR4Lh5aT74Mn74P_kW0FmyGVyD_w0W2hNxLWfNayUuJNtL/embed?start=false&amp;loop=false&amp;delayms=5000" frameborder="0" width="480" height="299" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
+<h3 id="commands-used-in-slides">Commands used in Slides</h3>
+
+<p><strong>These render a little oddly (extra blank space) in this webpage, but work fine when cut pasted (at least on my machine!) Most commands are written using macOS file paths unless otherwise specified. For windows users, substitute <code class="highlighter-rouge">~power.gif</code> for your output file.</strong></p>
+
+<h4 id="slide-5">Slide 5</h4>
+
+<p>FFmpeg macOS Homebrew Install:</p>
+
+<p>Install Homebrew by opening Terminal and following homebrew install instructions from <a href="https://brew.sh">https://brew.sh</a>)</p>
+
+<p>Then run:
+<code class="highlighter-rouge">brew install ffmpeg --with-sdl2</code></p>
+
+<p>Alternately Download from here (OSX and Windows) <a href="https://ffmpeg.org/download.html">https://ffmpeg.org/download.html</a></p>
+
+<h4 id="slide-10">Slide 10</h4>
+<p>Caveat for following slides:</p>
+
+<p>FFmpeg must be installed with freetype and openssl for the following slides. If already installed, run:</p>
+
+<p><code class="highlighter-rouge">brew reinstall ffmpeg --with-freetype --with-openssl</code></p>
+
+<h4 id="slides1117">Slides11/17</h4>
+<p>OSX Command:</p>
+
+<p><code class="highlighter-rouge">ffmpeg -f lavfi -i testsrc=500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex "[0:v][1:v]overlay=-30:55,drawtext=fontfile=/Library/Fonts/Andale Mono.ttf:text='I have the power':fontcolor=white:fontsize=40:box=1:boxcolor=black" -r 10 -t 5 ~/desktop/power.gif</code></p>
+
+<p>Windows Command:</p>
+
+<p><code class="highlighter-rouge">ffmpeg -f lavfi -i testsrc=500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex "[0:v][1:v]overlay=-30:55,drawtext=fontfile=/Windows/Fonts/lucon.ttf:text='I have the power':fontcolor=white:fontsize=40:box=1:boxcolor=black" -r 10 -t 5 ~power.gif</code></p>
+
+<h4 id="slide-12">Slide 12</h4>
+<p><code class="highlighter-rouge">ffmpeg -i http://github.com/privatezero/NDSR/raw/master/heman.tiff ~/desktop/power.gif</code></p>
+
+<h4 id="slide-13">Slide 13</h4>
+<p><code class="highlighter-rouge">ffmpeg -f lavfi -i testsrc ~/desktop/power.gif</code></p>
+
+<h4 id="slide-14">Slide 14</h4>
+<p><code class="highlighter-rouge">ffmpeg -f lavfi -i testsrc -r 10 -t 5 ~/desktop/power.gif</code></p>
+
+<h4 id="slide-15">Slide 15</h4>
+<p><code class="highlighter-rouge">ffmpeg -f lavfi -i testsrc -vf vflip -r 10 -t 5 ~/desktop/power.gif</code></p>
+
+<h4 id="slide-16">Slide 16</h4>
+<p><code class="highlighter-rouge">ffmpeg -f lavfi -i testsrc=500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex "[0:v][1:v]overlay=-30:55" -r 10 -t 5 ~/desktop/power.gif</code></p>

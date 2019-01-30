@@ -2,13 +2,169 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Andrew Weaver's Blog</title>
-    <description>Welcome to my blog! Sometimes I write about stuff here. And things.
-</description>
+    <description></description>
     <link>privatezero.github.io/weaverblog/weaverblog/</link>
     <atom:link href="privatezero.github.io/weaverblog/weaverblog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 21 Sep 2017 01:28:20 +0000</pubDate>
-    <lastBuildDate>Thu, 21 Sep 2017 01:28:20 +0000</lastBuildDate>
+    <pubDate>Thu, 07 Jun 2018 23:37:00 +0000</pubDate>
+    <lastBuildDate>Thu, 07 Jun 2018 23:37:00 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>Experiments In Automatic Captioning</title>
+        <description>&lt;p&gt;Recently I have been investigating tools to help with automating at least part of the transcription process for the audiovisual materials my institution makes available online. As we have hundreds (thousands?) of hours worth of A/V content already digitally available via our various platforms, and are actively producing more, using automation for a portion of the transcription process makes both logical and fiscal sense for us.&lt;/p&gt;
+
+&lt;p&gt;The tool I have been most actively experimenting with is the &lt;a href=&quot;https://www.ibm.com/watson/services/speech-to-text/&quot;&gt;IBM Watson speech to text service&lt;/a&gt;. I should note that this post is simply a reflection of my thoughts on this process so far and is not intended as an explicit recommendation or endorsement of Watson over any of the other similar tools. This testing involved signing up for a non-paid level account on IBM Watson.&lt;/p&gt;
+
+&lt;p&gt;To generate video subtitles using Watson I have been using two scripts. &lt;a href=&quot;https://github.com/WSU-CDSC/microservices/blob/master/vid2watson.sh&quot;&gt;One, written in bash&lt;/a&gt; that handles the actual piping of the file to Watson by converting an input to 16 kHz mono, uploading to Watson and then storing the raw Watson output in a &lt;code class=&quot;highlighter-rouge&quot;&gt;.json&lt;/code&gt; file. It also creates a rough dump of the raw transcript into text. &lt;a href=&quot;https://github.com/WSU-CDSC/microservices/blob/master/watson2vtt.rb&quot;&gt;The second, written in Ruby&lt;/a&gt; takes the raw Watson output and parses it into four second segments formatted as a &lt;code class=&quot;highlighter-rouge&quot;&gt;.vtt&lt;/code&gt; subtitle file. This file can then be used directly with its corresponding video to provide a rough subtitle track.&lt;/p&gt;
+
+&lt;p&gt;I made the decision to parse the text into four second segments with the idea of minimizing the amount of intervention required by someone proofreading the &lt;code class=&quot;highlighter-rouge&quot;&gt;.vtt&lt;/code&gt; files. By standardizing the text chunks, it eliminates the need for any manipulation of text timing (which also makes it easier to do editing in a basic text editor rather than specialized software). Hopefully, having the editor only focus on textual content will save time and money (as well as the sanity of the proofreaders).&lt;/p&gt;
+
+&lt;p&gt;So far the results, while far from perfect, have been honestly better than I expected them to be! Quality of the transcript is very dependent on the style of speech employed by speakers in the video, and as the speech model employed seems to be tuned towards a very particular kind of American English, it struggles with speakers who speak in a more ‘casual’ style (such frequently interjecting ‘ya know’) where it will mis-assign and make up words. Proper nouns and non-English words are also mis-assigned frequently. A word that Watson often struggles with is ‘Archivist’, which is unfortunate given the context. This being said, I have been surprised that for several of the videos I have tested there have been broad segments (again, dependent on speaker) that created extremely usable subtitles even with no proofreading.&lt;/p&gt;
+
+&lt;p&gt;To show an example of a completely human created transcript compared with an unedited Watson created transcript I have uploaded two &lt;code class=&quot;highlighter-rouge&quot;&gt;.vtt&lt;/code&gt; files to Github Gist, with the &lt;a href=&quot;https://gist.github.com/privatezero/6db770e5ff8ff68099cc45b4799faf8e&quot;&gt;Watson Transcript here&lt;/a&gt; and the &lt;a href=&quot;https://gist.github.com/privatezero/5b56ea572b9fcfe4bd7b474e97f4fd32&quot;&gt;professionally transcribed file here&lt;/a&gt;. The original video is viewable on &lt;a href=&quot;https://vimeo.com/236169049&quot;&gt;our Vimeo page here&lt;/a&gt;. I think this auto-transcript is relatively representative of my testing so far, being of medium accuracy.&lt;/p&gt;
+
+&lt;p&gt;As usual, the scripts are hosted on our &lt;a href=&quot;https://github.com/WSU-CDSC/microservices&quot;&gt;institutional Github repository&lt;/a&gt;, with some &lt;a href=&quot;https://github.com/WSU-CDSC/microservices/blob/master/Resources/transcription-scripts.md&quot;&gt;brief usage instructions available&lt;/a&gt;!&lt;/p&gt;
+</description>
+        <pubDate>Thu, 07 Jun 2018 00:00:00 +0000</pubDate>
+        <link>privatezero.github.io/weaverblog/weaverblog/2018/06/07/Experiments-in-Automatic-Captioning.html</link>
+        <guid isPermaLink="true">privatezero.github.io/weaverblog/weaverblog/2018/06/07/Experiments-in-Automatic-Captioning.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Testing For Archivematica Migration</title>
+        <description>&lt;h1 id=&quot;diving-into-aips-contentdm--archivematica&quot;&gt;Diving into AIPs: ContentDM ➜ Archivematica&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&quot;/weaverblog/resources/diving.png&quot; alt=&quot;Picture of Diving Operation&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Underwater diving operations, ca. 1900. &lt;a href=&quot;http://content.libraries.wsu.edu/cdm/singleitem/collection/cpratsch/id/359/rec/1&quot;&gt;Source&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;My institution has a LOT of amazing content preserved digitally in its storage. It also has a LOT of amazing metadata about this content, much of it contained within a hosted CONTENTdm instance, that surely represents thousands of hours of labor. One of my ongoing goals is to start gathering all of this information into archival packages built around the &lt;a href=&quot;https://en.wikipedia.org/wiki/Open_Archival_Information_System&quot;&gt;OAIS model&lt;/a&gt;. This would make it not only easier to handle in terms of performing preservation actions, it also would help ensure that digital items never become disassociated from their respective descriptive and administrative metadata.&lt;/p&gt;
+
+&lt;p&gt;Recently, the main tool I have been experimenting with is &lt;a href=&quot;https://www.archivematica.org/en/&quot;&gt;Archivematica&lt;/a&gt;. So far, Archivematica seems to have a lot of potential for assisting with what I am trying to do. It has a logical &lt;a href=&quot;https://en.wikipedia.org/wiki/Microservices&quot;&gt;microservice&lt;/a&gt; based approach that should open the door to a lot of customization. Additionally, I like the fact that Archivematica is designed to leverage the power of the open-source community and is working to integrate other amazing projects such as &lt;a href=&quot;https://mediaarea.net/MediaConch&quot;&gt;MediaConch&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;All this being said, I was curious to see what a hypothetical process of wrangling our existing data into Archivematica would consist of. Conceptually, I need to export the metadata out of CONTENTdm, associate it with preservation files in our storage and then arrange the metadata/items in a manner that is palatable to Archivematica. I was also curious to see how well I could automate this process, as should we decide to do a migration of this sort for real, I would rather not spend months and months copy-pasting metadata and files by hand!&lt;/p&gt;
+
+&lt;p&gt;To evaluate the viability of this process, I created a test script (current form available &lt;a href=&quot;https://github.com/privatezero/contentdm_parse/blob/master/contentdm_parse.rb&quot;&gt;here on github&lt;/a&gt;). Using the &lt;a href=&quot;https://ruby-doc.org/stdlib-2.0.0/libdoc/csv/rdoc/CSV.html&quot;&gt;Ruby CSV class&lt;/a&gt;, this script attempts to take the TSV (tab separated vales) metadata exports provided by CONTENTdm and parse it into the CSV (comma separated values) Archivematica allows for &lt;a href=&quot;https://wiki.archivematica.org/Metadata_import&quot;&gt;Dublin Core ingest&lt;/a&gt;. Although the two formats use different column headers, since they map to the same Dublin Core fields, this was a relatively smooth process. Since the CONTENTdm metadata also included information about original item IDs , I was also able to parse this column and have the script recursively search directories in our digital storage to find archival master files that corresponded to the access files in CONTENTdm.&lt;/p&gt;
+
+&lt;p&gt;Once the script has located the master files and parsed the metadata, it is then able to assemble a package suitable for Archivematica ingest. Archivematica calls for a basic structure involving an &lt;code class=&quot;highlighter-rouge&quot;&gt;objects&lt;/code&gt; directory and a &lt;code class=&quot;highlighter-rouge&quot;&gt;metadata&lt;/code&gt; directory. For every master file that is located by the script, it makes a copy in an &lt;code class=&quot;highlighter-rouge&quot;&gt;output/objects&lt;/code&gt; directory and then compares checksums for the two files to make sure that no data was corrupted. It also exports the newly created metadata csv (including the relative file paths to the objects that Archivematica requires for metadata ingest) into &lt;code class=&quot;highlighter-rouge&quot;&gt;output/metadata&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;In tests so far, this has worked surprisingly well! I tried pointing the script at the &lt;a href=&quot;http://content.libraries.wsu.edu/cdm/landingpage/collection/cpratsch/&quot;&gt;Charles Pratch Collection&lt;/a&gt; of early 1900s Grays Harbor photographs, and not only did it perform entirely as expected, the resulting CSV file required very little manual inspection prior to ingest into my trial instance of Archivematica.&lt;/p&gt;
+
+&lt;p&gt;I was able to go from a whole lot of this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;Title   Manning Hill and Eagle bike on road to Hoquiam, 1893.
+Creator     Pratsch, Charles R.
+Date    1893
+Subject     Bicycles &lt;span class=&quot;err&quot;&gt;&amp;amp;&lt;/span&gt; tricycles--Washington (State); Men--Washington (State); Roads--Washington (State); Trees--Washington (State)
+Type    Image
+Genre   Glass negatives
+Identifier  pc018b02n001
+Source  Is found in PC 18, Charles R. Pratsch Photographs http://libraries.wsu.edu/masc/finders/pratsch.htm at Washington State University Libraries' Manuscripts, Archives, and Special Collections (MASC) http://libraries.wsu.edu/masc
+Publisher   Manuscripts, Archives, and Special Collections, Washington State University Libraries: http://www.libraries.wsu.edu/masc/masc.htm
+Coverage    Hoquiam, Washington
+Rights  http://rightsstatements.org/vocab/NKC/1.0/
+Rights Notes    No known copyright. Item went into public domain 70 years after the 1937 death of the author.
+Format  Original photographic prints were scanned as 300 dpi TIFF files on a Microtek 9600XL scanner. 72 dpi JPEG files were then added to the CONTENTdm database at the WSU Libraries.
+Language    English &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;to a whole lot of this:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-xml&quot; data-lang=&quot;xml&quot;&gt;      &lt;span class=&quot;nt&quot;&gt;&amp;lt;mets:xmlData&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;dcterms:dublincore&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns:dc=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://purl.org/dc/elements/1.1/&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xmlns:dcterms=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://purl.org/dc/terms/&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;xsi:schemaLocation=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://purl.org/dc/terms/ http://dublincore.org/schemas/xmls/qdc/2008/02/11/dcterms.xsd&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:title&amp;gt;&lt;/span&gt;Manning Hill and Eagle bike on road to Hoquiam, 1893.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:title&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:creator&amp;gt;&lt;/span&gt;Pratsch, Charles R.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:creator&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:description&amp;gt;&amp;lt;/dc:description&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:date&amp;gt;&lt;/span&gt;1893&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:date&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:subject&amp;gt;&lt;/span&gt;Bicycles &lt;span class=&quot;ni&quot;&gt;&amp;amp;amp;&lt;/span&gt;amp; tricycles--Washington (State); Men--Washington (State); Roads--Washington (State); Trees--Washington (State)&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:subject&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:type&amp;gt;&lt;/span&gt;Image&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:type&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:identifer&amp;gt;&lt;/span&gt;pc018b02n001&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:identifer&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:source&amp;gt;&lt;/span&gt;Is found in PC 18, Charles R. Pratsch Photographs http://libraries.wsu.edu/masc/finders/pratsch.htm at Washington State University Libraries' Manuscripts, Archives, and Special Collections (MASC) http://libraries.wsu.edu/masc&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:source&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:publisher&amp;gt;&lt;/span&gt;Manuscripts, Archives, and Special Collections, Washington State University Libraries: http://www.libraries.wsu.edu/masc/masc.htm&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:publisher&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:rights&amp;gt;&lt;/span&gt;http://rightsstatements.org/vocab/NKC/1.0/&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:rights&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:format&amp;gt;&lt;/span&gt;Original photographic prints were scanned as 300 dpi TIFF files on a Microtek 9600XL scanner. 72 dpi JPEG files were then added to the CONTENTdm database at the WSU Libraries.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:format&amp;gt;&lt;/span&gt;
+          &lt;span class=&quot;nt&quot;&gt;&amp;lt;dc:language&amp;gt;&lt;/span&gt;English&lt;span class=&quot;nt&quot;&gt;&amp;lt;/dc:language&amp;gt;&lt;/span&gt;
+        &lt;span class=&quot;nt&quot;&gt;&amp;lt;/dcterms:dublincore&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/mets:xmlData&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/mets:mdWrap&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/mets:dmdSec&amp;gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;while performing digital preservation actions on a whole lot of amazing things like this!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/weaverblog/resources/bikedude.png&quot; alt=&quot;Man with bike in woods&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Manning Hill and Eagle bike on road to Hoquiam. &lt;a href=&quot;http://content.libraries.wsu.edu/cdm/singleitem/collection/cpratsch/id/0/rec/1&quot;&gt;Source&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;I am still evaluating the different options for moving our digital storage into a package based preservation system, but I have been very heartened by the results of this process! While this system is only effective so far for digital items that have been cataloged, it shows that an Archivematica migration is definitely a viable possibility for us. I look forward to seeing how much more of the process could potentially be automated.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 29 Mar 2018 00:00:00 +0000</pubDate>
+        <link>privatezero.github.io/weaverblog/weaverblog/2018/03/29/Testing-for-Archivematica-Migration.html</link>
+        <guid isPermaLink="true">privatezero.github.io/weaverblog/weaverblog/2018/03/29/Testing-for-Archivematica-Migration.html</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Return To Perceptual Hashing</title>
+        <description>&lt;h3 id=&quot;return-to-perceptual-hashing&quot;&gt;Return to Perceptual Hashing!&lt;/h3&gt;
+
+&lt;p&gt;As a follow up to my presentation about Perceptual Hashing of A/V content (&lt;a href=&quot;https://privatezero.github.io/amiapresentation2017/&quot;&gt;slides available here&lt;/a&gt;), I thought I would put up a quick post and some tools as a resource for anyone who is interested in experimenting more with this technology!&lt;/p&gt;
+
+&lt;p&gt;As my original work with perceptual hashing was conducted at &lt;a href=&quot;http://www.cuny.tv/&quot;&gt;CUNY-TV&lt;/a&gt;, the database and integrated scripts were built around CUNY-TV systems and workflows. While the original tools are all available within the &lt;a href=&quot;https://github.com/mediamicroservices&quot;&gt;microservices repository&lt;/a&gt; used at CUNY, I though it might lower the barrier to experimentation if I peeled out the tools related to hashing into their own resource.&lt;/p&gt;
+
+&lt;p&gt;Right now, this is in a little bit of a quick and dirty form, with some simplifications and changes to the CUNY scripts (more on that later), but it should serve as a means to quickly create a hash database to do some testing with.&lt;/p&gt;
+
+&lt;h3 id=&quot;tool-for-experimentation&quot;&gt;Tool for experimentation&lt;/h3&gt;
+
+&lt;p&gt;I have created a repository at &lt;a href=&quot;https://github.com/pugetsoundandvision&quot;&gt;pugetsoundandvision&lt;/a&gt; that contains some basic scripts to create and configure a database to store perceptual hashes, generate and report hashes from source files and query the database for similar content. It can be found at:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/pugetsoundandvision/perceptual&quot;&gt;https://github.com/pugetsoundandvision/perceptual&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;As I have been experimenting a bit with using &lt;a href=&quot;https://en.wikipedia.org/wiki/Hamming_distance&quot;&gt;hamming distance&lt;/a&gt; to compare hashes rather than the exact content match queries used in the CUNY tools, these experimental scripts differ from the CUNY tools in a couple ways.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Currently instead of storing all five &lt;code class=&quot;highlighter-rouge&quot;&gt;bagofwords&lt;/code&gt; components of the rough hash, only the first is being stored. This hash is broken up into 9 columns in the Database that represent 27 character subsets of the original binary &lt;code class=&quot;highlighter-rouge&quot;&gt;bagofwords&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Hashes are now stored as decimal numbers instead of binary numbers. This allows for the same amount of data to be stored in less characters in the database.&lt;/li&gt;
+  &lt;li&gt;The query now searches for matches within a hamming distance of 2 using the following query method:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;BIT_COUNT(hash1 ^ '${hashdec1}') + BIT_COUNT(hash2 ^ '${hashdec2}') ... &amp;lt;= 2&quot;&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;For the time being output has been massively simplified compared to the CUNY implementation. There is no visual preview output in these scripts. Output is limited to the terminal and contains mediaid, in frame, out frame and the first two hash columns for any matches discovered.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;installing-and-using-tools&quot;&gt;Installing and using tools&lt;/h2&gt;
+
+&lt;p&gt;The tools depend on having both MySQL and FFmpeg already installed, so if you don’t have those that is your first step! (Also, currently these tools only work in Mac or Linux systems).&lt;/p&gt;
+
+&lt;p&gt;The tools can either be downloaded as a ZIP from github or with the command &lt;code class=&quot;highlighter-rouge&quot;&gt;git clone https://github.com/pugetsoundandvision/perceptual.git&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;createconfigure-db&quot;&gt;Create/Configure DB&lt;/h3&gt;
+&lt;p&gt;Once downloaded, from within the &lt;code class=&quot;highlighter-rouge&quot;&gt;perceptual&lt;/code&gt; directory run the command &lt;code class=&quot;highlighter-rouge&quot;&gt;./createfingerprintdb.sh&lt;/code&gt;. This will walk you through the process of creating a database, user and login profile for fingerprint storage/query. You will need to enter your MySQl root password a couple of times, and at the end it will output a command that you must run to create the login profile. You will run this command, followed by the password you selected for your user during database creation. Once this is done, the script should have automatically stored the database and login information in the &lt;code class=&quot;highlighter-rouge&quot;&gt;FINGERPRINTDB_CONFIG.txt&lt;/code&gt; file. If anything needs to be changed you can manually edit this file in a text editor.&lt;/p&gt;
+
+&lt;h3 id=&quot;createstore-hashes&quot;&gt;Create/Store Hashes&lt;/h3&gt;
+&lt;p&gt;Once the database has been created you can start populating it with perceptual hashes! To do this (again from within the &lt;code class=&quot;highlighter-rouge&quot;&gt;perceptual&lt;/code&gt; directory) run &lt;code class=&quot;highlighter-rouge&quot;&gt;./makefingerprint.sh INPUTFILE&lt;/code&gt;. This can be run on any kind of video file, and the input doesn’t have to be in the same directory. The script does need the full absolute file path, so it works best if after typing &lt;code class=&quot;highlighter-rouge&quot;&gt;./makefingerprint.sh&lt;/code&gt; you type a space and then drag your file into the terminal window. &lt;strong&gt;Don’t forget the space!&lt;/strong&gt; This script will generate a full fingerprint (stored in a sub-directory in the same location as the input file) and report the &lt;code class=&quot;highlighter-rouge&quot;&gt;bagofwords&lt;/code&gt; information to the database.&lt;/p&gt;
+
+&lt;h3 id=&quot;query-hashes&quot;&gt;Query Hashes&lt;/h3&gt;
+&lt;p&gt;Once you have some perceptual hashes stored in the database, you can query against it using the &lt;code class=&quot;highlighter-rouge&quot;&gt;searchfingerprint.sh&lt;/code&gt; script. This script allows you set an in point and out point for fingerprint comparison so shorter subsections of videos (such as individual scenes) can be quickly compared. An example of this would be &lt;code class=&quot;highlighter-rouge&quot;&gt;./searchfingerprint.sh -i 30 -o 60 INPUTFILE&lt;/code&gt;. This command would create and compare fingerprints for content starting at 30 seconds and ending at 60 seconds in the input file. To run a comparison against a whole input file you would use &lt;code class=&quot;highlighter-rouge&quot;&gt;./searchfingerprint INPUTFILE&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;If matching content is discovered, the output will look something like
+&lt;img src=&quot;/weaverblog/resources/templeofthedog.png&quot; alt=&quot;searchoutput&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;where the first column is the mediaid (yes I am still using Temple of the Dog as my test file), the second column is the in frame of the matching segment, the third is the out frame of the matching segment, and the fourth and fifth are the first two elements of the matching hash.&lt;/p&gt;
+
+&lt;h3 id=&quot;good-luck&quot;&gt;Good luck!&lt;/h3&gt;
+&lt;p&gt;This repository was developed as a starting point for some research/experimentation with perceptual hashes. I am planning on modifying it to store more hash information and to be faster (probably ultimately rewriting the scripts in a different language such as Ruby). I hope this is helpful for anyone who wants to give hashing a try - let me know any questions, comments or successes you may have!&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 12 Dec 2017 00:00:00 +0000</pubDate>
+        <link>privatezero.github.io/weaverblog/weaverblog/2017/12/12/Return-to-perceptual-hashing.html</link>
+        <guid isPermaLink="true">privatezero.github.io/weaverblog/weaverblog/2017/12/12/Return-to-perceptual-hashing.html</guid>
+        
+        
+      </item>
     
       <item>
         <title>Demystifying Ffmpeg</title>
@@ -31,7 +187,7 @@
 
 &lt;h3 id=&quot;commands-used-in-slides&quot;&gt;Commands used in Slides&lt;/h3&gt;
 
-&lt;p&gt;&lt;strong&gt;These render a little oddly (extra blank space) in this webpage, but work fine when cut pasted (at least on my machine!) Most commands are written using macOS file paths unless otherwise specified. For windows users, substitute &lt;code class=&quot;highlighter-rouge&quot;&gt;~power.gif&lt;/code&gt; for your output file.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Most commands are written using macOS file paths unless otherwise specified. For windows users, substitute &lt;code class=&quot;highlighter-rouge&quot;&gt;~power.gif&lt;/code&gt; for your output file.**&lt;/p&gt;
 
 &lt;h4 id=&quot;slide-5&quot;&gt;Slide 5&lt;/h4&gt;
 
@@ -39,8 +195,9 @@
 
 &lt;p&gt;Install Homebrew by opening Terminal and following homebrew install instructions from &lt;a href=&quot;https://brew.sh&quot;&gt;https://brew.sh&lt;/a&gt;)&lt;/p&gt;
 
-&lt;p&gt;Then run:
-&lt;code class=&quot;highlighter-rouge&quot;&gt;brew install ffmpeg --with-sdl2&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Then run:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;brew install ffmpeg --with-sdl2&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Alternately Download from here (OSX and Windows) &lt;a href=&quot;https://ffmpeg.org/download.html&quot;&gt;https://ffmpeg.org/download.html&lt;/a&gt;&lt;/p&gt;
 
@@ -49,31 +206,36 @@
 
 &lt;p&gt;FFmpeg must be installed with freetype and openssl for the following slides. If already installed, run:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;brew reinstall ffmpeg --with-freetype --with-openssl&lt;/code&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;brew reinstall ffmpeg --with-freetype --with-openssl&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h4 id=&quot;slides1117&quot;&gt;Slides11/17&lt;/h4&gt;
 &lt;p&gt;OSX Command:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ffmpeg -f lavfi -i testsrc=500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex &quot;[0:v][1:v]overlay=-30:55,drawtext=fontfile=/Library/Fonts/Andale Mono.ttf:text='I have the power':fontcolor=white:fontsize=40:box=1:boxcolor=black&quot; -r 10 -t 5 ~/desktop/power.gif&lt;/code&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;ffmpeg -f lavfi -i &lt;span class=&quot;nv&quot;&gt;testsrc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex &lt;span class=&quot;s2&quot;&gt;&quot;[0:v][1:v]overlay=-30:55,drawtext=fontfile=/Library/Fonts/Andale Mono.ttf:text='I have the power':fontcolor=white:fontsize=40:box=1:boxcolor=black&quot;&lt;/span&gt; -r 10 -t 5 ~/desktop/power.gif&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;Windows Command:&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ffmpeg -f lavfi -i testsrc=500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex &quot;[0:v][1:v]overlay=-30:55,drawtext=fontfile=/Windows/Fonts/lucon.ttf:text='I have the power':fontcolor=white:fontsize=40:box=1:boxcolor=black&quot; -r 10 -t 5 ~power.gif&lt;/code&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;ffmpeg -f lavfi -i &lt;span class=&quot;nv&quot;&gt;testsrc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex &lt;span class=&quot;s2&quot;&gt;&quot;[0:v][1:v]overlay=-30:55,drawtext=fontfile=/Windows/Fonts/lucon.ttf:text='I have the power':fontcolor=white:fontsize=40:box=1:boxcolor=black&quot;&lt;/span&gt; -r 10 -t 5 ~power.gif&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h4 id=&quot;slide-12&quot;&gt;Slide 12&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ffmpeg -i http://github.com/privatezero/NDSR/raw/master/heman.tiff ~/desktop/power.gif&lt;/code&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;ffmpeg -i http://github.com/privatezero/NDSR/raw/master/heman.tiff ~/desktop/power.gif&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h4 id=&quot;slide-13&quot;&gt;Slide 13&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ffmpeg -f lavfi -i testsrc ~/desktop/power.gif&lt;/code&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;ffmpeg -f lavfi -i testsrc ~/desktop/power.gif&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h4 id=&quot;slide-14&quot;&gt;Slide 14&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ffmpeg -f lavfi -i testsrc -r 10 -t 5 ~/desktop/power.gif&lt;/code&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;ffmpeg -f lavfi -i testsrc -r 10 -t 5 ~/desktop/power.gif&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h4 id=&quot;slide-15&quot;&gt;Slide 15&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ffmpeg -f lavfi -i testsrc -vf vflip -r 10 -t 5 ~/desktop/power.gif&lt;/code&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;ffmpeg -f lavfi -i testsrc -vf vflip -r 10 -t 5 ~/desktop/power.gif&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;h4 id=&quot;slide-16&quot;&gt;Slide 16&lt;/h4&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ffmpeg -f lavfi -i testsrc=500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex &quot;[0:v][1:v]overlay=-30:55&quot; -r 10 -t 5 ~/desktop/power.gif&lt;/code&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;ffmpeg -f lavfi -i &lt;span class=&quot;nv&quot;&gt;testsrc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;500x500 -i http://github.com/privatezero/NDSR/raw/master/heman.tiff -filter_complex &lt;span class=&quot;s2&quot;&gt;&quot;[0:v][1:v]overlay=-30:55&quot;&lt;/span&gt; -r 10 -t 5 ~/desktop/power.gif&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 </description>
         <pubDate>Wed, 20 Sep 2017 00:00:00 +0000</pubDate>
         <link>privatezero.github.io/weaverblog/weaverblog/2017/09/20/Demystifying-ffmpeg.html</link>

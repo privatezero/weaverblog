@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Andrew Weaver's Blog</title>
+    <!-- Bootstrap Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Oxygen:300,400" rel="stylesheet">
+    <!-- fontawesome fonts -->
+    <link rel="stylesheet" href="  /weaverblog/css/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
+    <!-- site stylesheet -->
+    <link rel="stylesheet" href="/weaverblog/css/style.css" media="screen" title="no title" charset="utf-8">
+  </head>
+  <body>
+    <header>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 header">
+          <ul class="nav-icon">
+            <li><a href="/weaverblog" class="site-title">Blog Home</a></li>
+            <li><a href="http://andrewweaver.info" class="site-title">Website</a></li>
+            <li><a href="https://privatezero.github.io/tao" class="site-title">Tao</a></li>
+            <li><a href="https://github.com/privatezero" title="Github" data-hint="Github"  title="Github"><i class="fa fa-github"></i></a></li>
+            <li><a href="https://twitter.com/private_zero" title="Twitter" data-hint="Twitter"  title="Twitter"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="https://www.librarything.com/profile/private_zero" title="Library Thing" data-hint="LT"  title="Library Thing"><i class="fa fa-book"></i></a></li>
+          </ul>
+          <!-- site title -->
+          <h1 class="site-name">Andrew Weaver</h1>
+          <!-- tag 1 -->
+          <p class="site-tagline">I am an <span class="profession">Archivist/Librarian</span></p>
+           <!-- tag 2 -->
+           <p class="site-tagline">A blog about stuff. And things. Sometimes both.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <div class="container">
+      <!-- This page specific styling -->
+<style>
+  .center{
+    margin-top: 20px;
+    text-align: justify;
+  }
+
+  .page-title{
+    margin-top: 5px;
+    font-weight: 300;
+    font-size: 200%;
+  }
+
+</style>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <hr>
+    <br>
+    <h1 class="text-center page-title">Testing For Archivematica Migration</h1>
+    <p class="text-center"><time>March 29, 2018</time></p>
+    <div class="center">
+      <h1 id="diving-into-aips-contentdm--archivematica">Diving into AIPs: ContentDM ➜ Archivematica</h1>
+
+<p><img src="/weaverblog/resources/diving.png" alt="Picture of Diving Operation" /></p>
+
+<p><em>Underwater diving operations, ca. 1900. <a href="http://content.libraries.wsu.edu/cdm/singleitem/collection/cpratsch/id/359/rec/1">Source</a></em></p>
+
+<p>My institution has a LOT of amazing content preserved digitally in its storage. It also has a LOT of amazing metadata about this content, much of it contained within a hosted CONTENTdm instance, that surely represents thousands of hours of labor. One of my ongoing goals is to start gathering all of this information into archival packages built around the <a href="https://en.wikipedia.org/wiki/Open_Archival_Information_System">OAIS model</a>. This would make it not only easier to handle in terms of performing preservation actions, it also would help ensure that digital items never become disassociated from their respective descriptive and administrative metadata.</p>
+
+<p>Recently, the main tool I have been experimenting with is <a href="https://www.archivematica.org/en/">Archivematica</a>. So far, Archivematica seems to have a lot of potential for assisting with what I am trying to do. It has a logical <a href="https://en.wikipedia.org/wiki/Microservices">microservice</a> based approach that should open the door to a lot of customization. Additionally, I like the fact that Archivematica is designed to leverage the power of the open-source community and is working to integrate other amazing projects such as <a href="https://mediaarea.net/MediaConch">MediaConch</a>.</p>
+
+<p>All this being said, I was curious to see what a hypothetical process of wrangling our existing data into Archivematica would consist of. Conceptually, I need to export the metadata out of CONTENTdm, associate it with preservation files in our storage and then arrange the metadata/items in a manner that is palatable to Archivematica. I was also curious to see how well I could automate this process, as should we decide to do a migration of this sort for real, I would rather not spend months and months copy-pasting metadata and files by hand!</p>
+
+<p>To evaluate the viability of this process, I created a test script (current form available <a href="https://github.com/privatezero/contentdm_parse/blob/master/contentdm_parse.rb">here on github</a>). Using the <a href="https://ruby-doc.org/stdlib-2.0.0/libdoc/csv/rdoc/CSV.html">Ruby CSV class</a>, this script attempts to take the TSV (tab separated vales) metadata exports provided by CONTENTdm and parse it into the CSV (comma separated values) Archivematica allows for <a href="https://wiki.archivematica.org/Metadata_import">Dublin Core ingest</a>. Although the two formats use different column headers, since they map to the same Dublin Core fields, this was a relatively smooth process. Since the CONTENTdm metadata also included information about original item IDs , I was also able to parse this column and have the script recursively search directories in our digital storage to find archival master files that corresponded to the access files in CONTENTdm.</p>
+
+<p>Once the script has located the master files and parsed the metadata, it is then able to assemble a package suitable for Archivematica ingest. Archivematica calls for a basic structure involving an <code class="highlighter-rouge">objects</code> directory and a <code class="highlighter-rouge">metadata</code> directory. For every master file that is located by the script, it makes a copy in an <code class="highlighter-rouge">output/objects</code> directory and then compares checksums for the two files to make sure that no data was corrupted. It also exports the newly created metadata csv (including the relative file paths to the objects that Archivematica requires for metadata ingest) into <code class="highlighter-rouge">output/metadata</code>.</p>
+
+<p>In tests so far, this has worked surprisingly well! I tried pointing the script at the <a href="http://content.libraries.wsu.edu/cdm/landingpage/collection/cpratsch/">Charles Pratch Collection</a> of early 1900s Grays Harbor photographs, and not only did it perform entirely as expected, the resulting CSV file required very little manual inspection prior to ingest into my trial instance of Archivematica.</p>
+
+<p>I was able to go from a whole lot of this:</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml">Title   Manning Hill and Eagle bike on road to Hoquiam, 1893.
+Creator     Pratsch, Charles R.
+Date    1893
+Subject     Bicycles <span class="err">&amp;</span> tricycles--Washington (State); Men--Washington (State); Roads--Washington (State); Trees--Washington (State)
+Type    Image
+Genre   Glass negatives
+Identifier  pc018b02n001
+Source  Is found in PC 18, Charles R. Pratsch Photographs http://libraries.wsu.edu/masc/finders/pratsch.htm at Washington State University Libraries' Manuscripts, Archives, and Special Collections (MASC) http://libraries.wsu.edu/masc
+Publisher   Manuscripts, Archives, and Special Collections, Washington State University Libraries: http://www.libraries.wsu.edu/masc/masc.htm
+Coverage    Hoquiam, Washington
+Rights  http://rightsstatements.org/vocab/NKC/1.0/
+Rights Notes    No known copyright. Item went into public domain 70 years after the 1937 death of the author.
+Format  Original photographic prints were scanned as 300 dpi TIFF files on a Microtek 9600XL scanner. 72 dpi JPEG files were then added to the CONTENTdm database at the WSU Libraries.
+Language    English </code></pre></figure>
+
+<p>to a whole lot of this:</p>
+
+<figure class="highlight"><pre><code class="language-xml" data-lang="xml">      <span class="nt">&lt;mets:xmlData&gt;</span>
+        <span class="nt">&lt;dcterms:dublincore</span> <span class="na">xmlns:dc=</span><span class="s">"http://purl.org/dc/elements/1.1/"</span> <span class="na">xmlns:dcterms=</span><span class="s">"http://purl.org/dc/terms/"</span> <span class="na">xsi:schemaLocation=</span><span class="s">"http://purl.org/dc/terms/ http://dublincore.org/schemas/xmls/qdc/2008/02/11/dcterms.xsd"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;dc:title&gt;</span>Manning Hill and Eagle bike on road to Hoquiam, 1893.<span class="nt">&lt;/dc:title&gt;</span>
+          <span class="nt">&lt;dc:creator&gt;</span>Pratsch, Charles R.<span class="nt">&lt;/dc:creator&gt;</span>
+          <span class="nt">&lt;dc:description&gt;&lt;/dc:description&gt;</span>
+          <span class="nt">&lt;dc:date&gt;</span>1893<span class="nt">&lt;/dc:date&gt;</span>
+          <span class="nt">&lt;dc:subject&gt;</span>Bicycles <span class="ni">&amp;amp;</span>amp; tricycles--Washington (State); Men--Washington (State); Roads--Washington (State); Trees--Washington (State)<span class="nt">&lt;/dc:subject&gt;</span>
+          <span class="nt">&lt;dc:type&gt;</span>Image<span class="nt">&lt;/dc:type&gt;</span>
+          <span class="nt">&lt;dc:identifer&gt;</span>pc018b02n001<span class="nt">&lt;/dc:identifer&gt;</span>
+          <span class="nt">&lt;dc:source&gt;</span>Is found in PC 18, Charles R. Pratsch Photographs http://libraries.wsu.edu/masc/finders/pratsch.htm at Washington State University Libraries' Manuscripts, Archives, and Special Collections (MASC) http://libraries.wsu.edu/masc<span class="nt">&lt;/dc:source&gt;</span>
+          <span class="nt">&lt;dc:publisher&gt;</span>Manuscripts, Archives, and Special Collections, Washington State University Libraries: http://www.libraries.wsu.edu/masc/masc.htm<span class="nt">&lt;/dc:publisher&gt;</span>
+          <span class="nt">&lt;dc:rights&gt;</span>http://rightsstatements.org/vocab/NKC/1.0/<span class="nt">&lt;/dc:rights&gt;</span>
+          <span class="nt">&lt;dc:format&gt;</span>Original photographic prints were scanned as 300 dpi TIFF files on a Microtek 9600XL scanner. 72 dpi JPEG files were then added to the CONTENTdm database at the WSU Libraries.<span class="nt">&lt;/dc:format&gt;</span>
+          <span class="nt">&lt;dc:language&gt;</span>English<span class="nt">&lt;/dc:language&gt;</span>
+        <span class="nt">&lt;/dcterms:dublincore&gt;</span>
+      <span class="nt">&lt;/mets:xmlData&gt;</span>
+    <span class="nt">&lt;/mets:mdWrap&gt;</span>
+  <span class="nt">&lt;/mets:dmdSec&gt;</span></code></pre></figure>
+
+<p>while performing digital preservation actions on a whole lot of amazing things like this!</p>
+
+<p><img src="/weaverblog/resources/bikedude.png" alt="Man with bike in woods" /></p>
+
+<p><em>Manning Hill and Eagle bike on road to Hoquiam. <a href="http://content.libraries.wsu.edu/cdm/singleitem/collection/cpratsch/id/0/rec/1">Source</a></em></p>
+
+<p>I am still evaluating the different options for moving our digital storage into a package based preservation system, but I have been very heartened by the results of this process! While this system is only effective so far for digital items that have been cataloged, it shows that an Archivematica migration is definitely a viable possibility for us. I look forward to seeing how much more of the process could potentially be automated.</p>
+
+    </div>
+  </div>
+</div>
+<!-- Back button -->
+<p class="text-center"><a class="home" href="/weaverblog/" title="Back to Homepage">Home</a></p>
+
+    </div>
+    <!-- footer section -->
+    <!-- footer section -->
+<footer>
+  <p class="text-center">
+    "No matter where you go, there you are"<br>
+  </p>
+</footer>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </body>
+</html>
